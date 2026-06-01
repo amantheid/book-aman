@@ -81,15 +81,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Failed to save order' }, { status: 500 });
     }
 
-    // Resend configuration & Sandbox validation
+    // Resend configuration
     const senderEmail = process.env.SENDER_EMAIL || 'Creative Constructor <onboarding@resend.dev>';
     const isSandbox = senderEmail.includes('onboarding@resend.dev');
-
-    // In sandbox mode, send customer confirmation to the admin's verified email so they can preview it
-    const customerEmailRecipient = isSandbox ? 'amantheid@gmail.com' : email;
     const subjectPrefix = isSandbox ? '[TEST COPY] ' : '';
 
-    // Email 1 — Send customer confirmation email immediately
+    // Email 1 — Send customer confirmation email immediately (always directly to customer)
     const customerEmailHtml = `
       <div style="background-color: #FFFFE3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 3rem 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 2px solid #1a1a0e;">
         <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: #7a7a5a; margin: 0 0 1rem 0;">Aman Muhammed</p>
@@ -131,7 +128,7 @@ export async function POST(req: NextRequest) {
     try {
       const response = await resend.emails.send({
         from: senderEmail,
-        to: customerEmailRecipient,
+        to: email, // Directly to customer
         subject: `${subjectPrefix}Your Pre-Order is Received! 📖`,
         html: customerEmailHtml
       });

@@ -51,10 +51,9 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: updateError.message }, { status: 500 });
   }
 
-  // Resend configuration & Sandbox validation
+  // Resend configuration
   const senderEmail = process.env.SENDER_EMAIL || 'Creative Constructor <onboarding@resend.dev>';
   const isSandbox = senderEmail.includes('onboarding@resend.dev');
-  const recipient = isSandbox ? 'amantheid@gmail.com' : order.email;
   const subjectPrefix = isSandbox ? '[TEST COPY] ' : '';
 
   // Case 1: Order is confirmed
@@ -92,7 +91,7 @@ export async function PATCH(req: NextRequest) {
     try {
       const response = await resend.emails.send({
         from: senderEmail,
-        to: recipient,
+        to: order.email, // Directly to customer's email
         subject: `${subjectPrefix}Your Order is Confirmed! 🎉`,
         html: customerConfirmedEmailHtml
       });
@@ -145,7 +144,7 @@ export async function PATCH(req: NextRequest) {
     try {
       const response = await resend.emails.send({
         from: senderEmail,
-        to: recipient,
+        to: order.email, // Directly to customer's email
         subject: `${subjectPrefix}Update on Your Pre-Order`,
         html: customerCancelledEmailHtml
       });
@@ -200,7 +199,7 @@ export async function PATCH(req: NextRequest) {
     try {
       const response = await resend.emails.send({
         from: senderEmail,
-        to: recipient,
+        to: order.email, // Directly to customer's email
         subject: `${subjectPrefix}Your Book is on the Way! 📦`,
         html: customerShippedEmailHtml
       });
@@ -212,6 +211,26 @@ export async function PATCH(req: NextRequest) {
     } catch (err) {
       console.error('Error sending customer shipping email:', err);
     }
+  }
+
+  return NextResponse.json({ success: true });
+}
+
+export async function DELETE(req: NextRequest) {
+  const auth = req.headers.get('x-admin-auth');
+  if (auth !== process.env.ADMIN_SECRET) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const { id } = await req.json();
+
+  const { error } = await supabaseAdmin
+    .from('orders')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
   return NextResponse.json({ success: true });

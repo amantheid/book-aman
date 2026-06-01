@@ -92,6 +92,31 @@ export default function AdminPage() {
     }
   };
 
+  const handleDelete = async (id: string, e: React.MouseEvent) => {
+    e.stopPropagation(); // Stop details modal from opening when clicking delete card button
+    if (!window.confirm("Are you sure you want to delete this order?")) return;
+
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'DELETE',
+        headers: { 
+          'x-admin-auth': ADMIN_SECRET,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+      });
+      if (res.ok) {
+        setOrders(prev => prev.filter(o => o.id !== id));
+        if (selectedOrder?.id === id) setSelectedOrder(null);
+      } else {
+        alert("Failed to delete order.");
+      }
+    } catch (err) {
+      console.error('Delete error:', err);
+      alert("Failed to delete order.");
+    }
+  };
+
   const filteredOrders = filterStatus === "all" ? orders : orders.filter(o => o.status === filterStatus);
 
   const statusColor = (s: string) => {
@@ -230,9 +255,25 @@ export default function AdminPage() {
                       }}>
                         {order.status}
                       </span>
-                      <p style={{ fontSize: '0.75rem', color: '#7a7a5a', margin: 0 }}>
+                      <p style={{ fontSize: '0.75rem', color: '#7a7a5a', margin: '0 0 0.4rem 0' }}>
                         {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </p>
+                      <button
+                        onClick={(e) => handleDelete(order.id, e)}
+                        style={{
+                          backgroundColor: '#cc0000',
+                          color: '#FFFFE3',
+                          border: 'none',
+                          padding: '0.4rem 0.8rem',
+                          fontSize: '0.7rem',
+                          fontWeight: 800,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -282,30 +323,51 @@ export default function AdminPage() {
               </div>
             )}
 
-            {/* Status Update */}
-            <div>
-              <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#1a1a0e', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Update Status</p>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                {['pending', 'confirmed', 'shipped', 'cancelled'].map(s => {
-                  const sc = statusColor(s);
-                  return (
-                    <button key={s} onClick={() => updateStatus(selectedOrder.id, s)}
-                      disabled={updating === selectedOrder.id}
-                      style={{
-                        padding: '0.5rem 1rem', borderRadius: '0px', cursor: 'pointer',
-                        fontSize: '0.8rem', fontWeight: 800,
-                        textTransform: 'uppercase', letterSpacing: '0.05em', transition: 'all 0.15s',
-                        border: selectedOrder.status === s ? '2px solid #1a1a0e' : `1px solid rgba(26,26,14,0.25)`,
-                        backgroundColor: selectedOrder.status === s ? sc.bg : 'transparent',
-                        color: '#1a1a0e',
-                      }}
-                      className={selectedOrder.status !== s ? "hover-cta" : ""}
-                    >
-                      {s}
-                    </button>
-                  );
-                })}
+            {/* Status Update & Delete */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', borderTop: '2px solid #1a1a0e', paddingTop: '1.5rem' }}>
+              <div>
+                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#1a1a0e', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Update Status</p>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  {['pending', 'confirmed', 'shipped', 'cancelled'].map(s => {
+                    const sc = statusColor(s);
+                    return (
+                      <button key={s} onClick={() => updateStatus(selectedOrder.id, s)}
+                        disabled={updating === selectedOrder.id}
+                        style={{
+                          padding: '0.5rem 1rem', borderRadius: '0px', cursor: 'pointer',
+                          fontSize: '0.8rem', fontWeight: 800,
+                          textTransform: 'uppercase', letterSpacing: '0.05em', transition: 'all 0.15s',
+                          border: selectedOrder.status === s ? '2px solid #1a1a0e' : `1px solid rgba(26,26,14,0.25)`,
+                          backgroundColor: selectedOrder.status === s ? sc.bg : 'transparent',
+                          color: '#1a1a0e',
+                        }}
+                        className={selectedOrder.status !== s ? "hover-cta" : ""}
+                      >
+                        {s}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
+              
+              <button
+                onClick={(e) => handleDelete(selectedOrder.id, e)}
+                style={{
+                  backgroundColor: '#cc0000',
+                  color: '#FFFFE3',
+                  border: 'none',
+                  padding: '0.6rem 1.2rem',
+                  borderRadius: '0px',
+                  cursor: 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}
+                className="hover-cta"
+              >
+                Delete Order
+              </button>
             </div>
           </div>
         </div>
