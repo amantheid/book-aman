@@ -30,3 +30,7 @@ CREATE POLICY "Allow public uploads" ON storage.objects
 -- Allow public read of screenshots
 CREATE POLICY "Allow public read" ON storage.objects
   FOR SELECT USING (bucket_id = 'screenshots');
+
+-- Enable Realtime for the orders table
+ALTER PUBLICATION supabase_realtime ADD TABLE orders;
+

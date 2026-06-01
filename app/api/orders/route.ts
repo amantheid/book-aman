@@ -89,6 +89,12 @@ export async function PATCH(req: NextRequest) {
     `;
 
     try {
+      console.log('--- RESEND EMAIL SENDING ATTEMPT (CONFIRMED) ---');
+      console.log('From address:', senderEmail);
+      console.log('To address (customer):', order.email);
+      console.log('Subject:', `${subjectPrefix}Your Order is Confirmed! 🎉`);
+      console.log('------------------------------------------------');
+
       const response = await resend.emails.send({
         from: senderEmail,
         to: order.email, // Directly to customer's email
@@ -97,6 +103,9 @@ export async function PATCH(req: NextRequest) {
       });
       if (response.error) {
         console.error('Resend customer confirmation email error:', response.error);
+        if (isSandbox || response.error.name === 'validation_error' || response.error.message?.includes('restriction')) {
+          console.warn('NOTE: If you are using the Resend Sandbox (onboarding@resend.dev) or an unverified domain, Resend will block emails sent to external customer email addresses. You must verify your custom domain in Resend and set the SENDER_EMAIL environment variable to send emails to arbitrary customers.');
+        }
       } else {
         console.log('Customer confirmation email sent successfully. ID:', response.data?.id);
       }
@@ -142,6 +151,12 @@ export async function PATCH(req: NextRequest) {
     `;
 
     try {
+      console.log('--- RESEND EMAIL SENDING ATTEMPT (CANCELLED) ---');
+      console.log('From address:', senderEmail);
+      console.log('To address (customer):', order.email);
+      console.log('Subject:', `${subjectPrefix}Update on Your Pre-Order`);
+      console.log('------------------------------------------------');
+
       const response = await resend.emails.send({
         from: senderEmail,
         to: order.email, // Directly to customer's email
@@ -150,6 +165,9 @@ export async function PATCH(req: NextRequest) {
       });
       if (response.error) {
         console.error('Resend customer cancellation email error:', response.error);
+        if (isSandbox || response.error.name === 'validation_error' || response.error.message?.includes('restriction')) {
+          console.warn('NOTE: If you are using the Resend Sandbox (onboarding@resend.dev) or an unverified domain, Resend will block emails sent to external customer email addresses. You must verify your custom domain in Resend and set the SENDER_EMAIL environment variable to send emails to arbitrary customers.');
+        }
       } else {
         console.log('Customer cancellation email sent successfully. ID:', response.data?.id);
       }
@@ -197,6 +215,12 @@ export async function PATCH(req: NextRequest) {
     `;
 
     try {
+      console.log('--- RESEND EMAIL SENDING ATTEMPT (SHIPPED) ---');
+      console.log('From address:', senderEmail);
+      console.log('To address (customer):', order.email);
+      console.log('Subject:', `${subjectPrefix}Your Book is on the Way! 📦`);
+      console.log('----------------------------------------------');
+
       const response = await resend.emails.send({
         from: senderEmail,
         to: order.email, // Directly to customer's email
@@ -205,6 +229,9 @@ export async function PATCH(req: NextRequest) {
       });
       if (response.error) {
         console.error('Resend customer shipping email error:', response.error);
+        if (isSandbox || response.error.name === 'validation_error' || response.error.message?.includes('restriction')) {
+          console.warn('NOTE: If you are using the Resend Sandbox (onboarding@resend.dev) or an unverified domain, Resend will block emails sent to external customer email addresses. You must verify your custom domain in Resend and set the SENDER_EMAIL environment variable to send emails to arbitrary customers.');
+        }
       } else {
         console.log('Customer shipping email sent successfully. ID:', response.data?.id);
       }

@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
     const isSandbox = senderEmail.includes('onboarding@resend.dev');
     const subjectPrefix = isSandbox ? '[TEST COPY] ' : '';
 
-    // Email 1 — Send customer confirmation email immediately (always directly to customer)
+    // Email 1 — Send customer confirmation email immediately
     const customerEmailHtml = `
       <div style="background-color: #FFFFE3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 3rem 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 2px solid #1a1a0e;">
         <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: #7a7a5a; margin: 0 0 1rem 0;">Aman Muhammed</p>
@@ -126,6 +126,12 @@ export async function POST(req: NextRequest) {
     `;
 
     try {
+      console.log('--- RESEND EMAIL SENDING ATTEMPT ---');
+      console.log('From address:', senderEmail);
+      console.log('To address (customer):', email);
+      console.log('Subject:', `${subjectPrefix}Your Pre-Order is Received! 📖`);
+      console.log('------------------------------------');
+      
       const response = await resend.emails.send({
         from: senderEmail,
         to: email, // Directly to customer
@@ -133,7 +139,10 @@ export async function POST(req: NextRequest) {
         html: customerEmailHtml
       });
       if (response.error) {
-        console.error('Resend customer email error:', response.error);
+        console.error('Resend customer email error details:', response.error);
+        if (isSandbox || response.error.name === 'validation_error' || response.error.message?.includes('restriction')) {
+          console.warn('NOTE: If you are using the Resend Sandbox (onboarding@resend.dev) or an unverified domain, Resend will block emails sent to external customer email addresses. You must verify your custom domain in Resend and set the SENDER_EMAIL environment variable to send emails to arbitrary customers.');
+        }
       } else {
         console.log('Customer confirmation email sent successfully. ID:', response.data?.id);
       }
@@ -182,6 +191,12 @@ export async function POST(req: NextRequest) {
     `;
 
     try {
+      console.log('--- RESEND EMAIL SENDING ATTEMPT (ADMIN) ---');
+      console.log('From address:', senderEmail);
+      console.log('To address (admin):', 'amantheid@gmail.com');
+      console.log('Subject:', `New Book Order #${orderNumber}`);
+      console.log('-------------------------------------------');
+
       const response = await resend.emails.send({
         from: senderEmail,
         to: 'amantheid@gmail.com',
@@ -189,7 +204,7 @@ export async function POST(req: NextRequest) {
         html: adminEmailHtml
       });
       if (response.error) {
-        console.error('Resend admin notification email error:', response.error);
+        console.error('Resend admin notification email error details:', response.error);
       } else {
         console.log('Admin notification email sent successfully. ID:', response.data?.id);
       }

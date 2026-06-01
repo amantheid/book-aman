@@ -61,7 +61,7 @@ export default function Home() {
         const { count, error } = await supabase
           .from('orders')
           .select('*', { count: 'exact', head: true })
-          .eq('status', 'confirmed');
+          .in('status', ['confirmed', 'shipped']);
         
         if (!error && count !== null) {
           setConfirmedCount(count);
@@ -72,6 +72,24 @@ export default function Home() {
     };
 
     fetchConfirmedCount();
+
+    // Subscribe to changes on the orders table in real time!
+    const channel = supabase
+      .channel('orders-realtime')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'orders' },
+        (payload) => {
+          console.log('Realtime change detected in orders table:', payload);
+          // Refetch the count of confirmed orders fresh from Supabase
+          fetchConfirmedCount();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const totalLimit = 90;
