@@ -95,46 +95,47 @@ export default function AdminPage() {
   const filteredOrders = filterStatus === "all" ? orders : orders.filter(o => o.status === filterStatus);
 
   const statusColor = (s: string) => {
-    if (s === 'confirmed') return { bg: '#e8f5e9', color: '#2e7d32', border: '#a5d6a7' };
-    if (s === 'shipped') return { bg: '#e3f2fd', color: '#1565c0', border: '#90caf9' };
-    if (s === 'pending') return { bg: '#fff8e1', color: '#f57f17', border: '#ffe082' };
-    return { bg: '#fce4ec', color: '#c62828', border: '#f48fb1' };
+    if (s === 'confirmed') return { bg: '#e8f5e9', color: '#2e7d32', border: '#1a1a0e' };
+    if (s === 'shipped') return { bg: '#e3f2fd', color: '#1565c0', border: '#1a1a0e' };
+    if (s === 'pending') return { bg: '#fff8e1', color: '#f57f17', border: '#1a1a0e' };
+    return { bg: '#fce4ec', color: '#c62828', border: '#1a1a0e' };
   };
 
   if (!authed) {
     return (
       <main style={{ backgroundColor: '#FFFFE3', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-        <div className="book-page" style={{ borderRadius: '4px', padding: '2.5rem 2.5rem 2.5rem 3.5rem', maxWidth: '400px', width: '100%' }}>
-          <p style={{ fontSize: '0.7rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#8B4513', marginBottom: '0.8rem', fontWeight: 700 }}>
+        <div style={{ border: '2px solid #1a1a0e', padding: '2.5rem', maxWidth: '400px', width: '100%', backgroundColor: '#FFFFE3', borderRadius: '0px' }}>
+          <p style={{ fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#7a7a5a', marginBottom: '0.5rem', fontWeight: 800 }}>
             Restricted Area
           </p>
-          <h1 className="display-font" style={{ fontSize: '1.8rem', color: '#1a1a0e', marginBottom: '1.5rem' }}>Admin Login</h1>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1a1a0e', marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>Admin Login</h1>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#3a3a2a', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</label>
+              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: '#1a1a0e', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</label>
               <input
                 type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleLogin()}
                 placeholder="admin@email.com"
-                style={{ width: '100%', padding: '0.7rem 0.9rem', border: '1px solid #c8c89a', borderRadius: '3px', backgroundColor: '#FFFFF0', color: '#1a1a0e', fontSize: '0.95rem', outline: 'none', fontFamily: "'Nunito', sans-serif" }}
+                style={{ width: '100%', padding: '0.8rem 1rem', border: '1px solid #1a1a0e', borderRadius: '0px', backgroundColor: '#FFFFE3', color: '#1a1a0e', fontSize: '0.95rem', outline: 'none' }}
               />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#3a3a2a', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Password</label>
+              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: '#1a1a0e', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Password</label>
               <input
                 type="password" value={loginPass} onChange={e => setLoginPass(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleLogin()}
                 placeholder="••••••••"
-                style={{ width: '100%', padding: '0.7rem 0.9rem', border: '1px solid #c8c89a', borderRadius: '3px', backgroundColor: '#FFFFF0', color: '#1a1a0e', fontSize: '0.95rem', outline: 'none', fontFamily: "'Nunito', sans-serif" }}
+                style={{ width: '100%', padding: '0.8rem 1rem', border: '1px solid #1a1a0e', borderRadius: '0px', backgroundColor: '#FFFFE3', color: '#1a1a0e', fontSize: '0.95rem', outline: 'none' }}
               />
             </div>
-            {loginError && <p style={{ color: '#cc0000', fontSize: '0.85rem' }}>{loginError}</p>}
+            {loginError && <p style={{ color: '#cc0000', fontSize: '0.85rem', fontWeight: 700 }}>{loginError}</p>}
             <button
               onClick={handleLogin}
-              style={{ backgroundColor: '#8B4513', color: '#FFFFE3', border: 'none', padding: '0.8rem', fontSize: '1rem', fontFamily: "'Nunito', sans-serif", fontWeight: 700, borderRadius: '3px', cursor: 'pointer' }}
+              style={{ backgroundColor: '#1a1a0e', color: '#FFFFE3', border: 'none', padding: '0.9rem', fontSize: '1rem', fontWeight: 800, borderRadius: '0px', cursor: 'pointer', textTransform: 'uppercase', letterSpacing: '0.05em' }}
+              className="hover-cta"
             >
-              Login →
+              Login &rarr;
             </button>
           </div>
         </div>
@@ -143,51 +144,54 @@ export default function AdminPage() {
   }
 
   return (
-    <main style={{ backgroundColor: '#FFFFE3', minHeight: '100vh', padding: '2rem 1rem 4rem' }}>
+    <main style={{ backgroundColor: '#FFFFE3', minHeight: '100vh', padding: '3rem 1.5rem 5rem' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            <p style={{ fontSize: '0.7rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#8B4513', fontWeight: 700, marginBottom: '0.2rem' }}>Admin Panel</p>
-            <h1 className="display-font" style={{ fontSize: '1.8rem', color: '#1a1a0e' }}>Orders Dashboard</h1>
+            <p style={{ fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#7a7a5a', fontWeight: 800, marginBottom: '0.3rem' }}>Admin Panel</p>
+            <h1 style={{ fontSize: '2rem', fontWeight: 800, color: '#1a1a0e', letterSpacing: '-0.02em', margin: 0 }}>Orders Dashboard</h1>
           </div>
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-            <button onClick={fetchOrders} style={{ backgroundColor: 'transparent', border: '1px solid #c8c89a', padding: '0.5rem 1rem', borderRadius: '3px', cursor: 'pointer', fontSize: '0.85rem', fontFamily: "'Nunito', sans-serif", color: '#3a3a2a', fontWeight: 600 }}>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <button onClick={fetchOrders} style={{ backgroundColor: 'transparent', border: '2px solid #1a1a0e', padding: '0.6rem 1.2rem', borderRadius: '0px', cursor: 'pointer', fontSize: '0.85rem', color: '#1a1a0e', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               ↻ Refresh
             </button>
-            <button onClick={() => setAuthed(false)} style={{ backgroundColor: '#8B4513', color: '#FFFFE3', border: 'none', padding: '0.5rem 1rem', borderRadius: '3px', cursor: 'pointer', fontSize: '0.85rem', fontFamily: "'Nunito', sans-serif", fontWeight: 600 }}>
+            <button onClick={() => setAuthed(false)} style={{ backgroundColor: '#1a1a0e', color: '#FFFFE3', border: 'none', padding: '0.6rem 1.2rem', borderRadius: '0px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }} className="hover-cta">
               Logout
             </button>
           </div>
         </div>
 
         {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1.25rem', marginBottom: '2.5rem' }}>
           {[
             { label: 'Total Orders', value: orders.length, color: '#1a1a0e' },
             { label: 'Pending', value: orders.filter(o => o.status === 'pending').length, color: '#f57f17' },
             { label: 'Confirmed', value: orders.filter(o => o.status === 'confirmed').length, color: '#2e7d32' },
             { label: 'Shipped', value: orders.filter(o => o.status === 'shipped').length, color: '#1565c0' },
           ].map(stat => (
-            <div key={stat.label} className="book-page" style={{ borderRadius: '4px', padding: '1rem 1.2rem' }}>
-              <p style={{ fontSize: '0.7rem', color: '#7a7a5a', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.3rem' }}>{stat.label}</p>
-              <p className="display-font" style={{ fontSize: '2rem', color: stat.color, fontWeight: 700 }}>{stat.value}</p>
+            <div key={stat.label} style={{ border: '2px solid #1a1a0e', padding: '1.5rem', backgroundColor: '#FFFFE3', borderRadius: '0px' }}>
+              <p style={{ fontSize: '0.75rem', color: '#7a7a5a', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginBottom: '0.5rem', margin: 0 }}>{stat.label}</p>
+              <p style={{ fontSize: '2.2rem', color: stat.color, fontWeight: 800, margin: 0, lineHeight: 1 }}>{stat.value}</p>
             </div>
           ))}
         </div>
 
-        {/* Filter */}
-        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+        {/* Filter Buttons */}
+        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
           {['all', 'pending', 'confirmed', 'shipped'].map(s => (
             <button key={s} onClick={() => setFilterStatus(s)}
               style={{
-                padding: '0.4rem 1rem', borderRadius: '3px', cursor: 'pointer', fontSize: '0.82rem',
-                fontFamily: "'Nunito', sans-serif", fontWeight: 600, textTransform: 'capitalize',
-                border: filterStatus === s ? '1px solid #8B4513' : '1px solid #c8c89a',
-                backgroundColor: filterStatus === s ? '#8B4513' : '#FFFFF0',
-                color: filterStatus === s ? '#FFFFE3' : '#3a3a2a',
-              }}>
+                padding: '0.5rem 1.2rem', borderRadius: '0px', cursor: 'pointer', fontSize: '0.85rem',
+                fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em',
+                border: '2px solid #1a1a0e',
+                backgroundColor: filterStatus === s ? '#1a1a0e' : 'transparent',
+                color: filterStatus === s ? '#FFFFE3' : '#1a1a0e',
+                transition: 'all 0.15s ease'
+              }}
+              className={filterStatus !== s ? "hover-cta" : ""}
+            >
               {s === 'all' ? 'All Orders' : s}
             </button>
           ))}
@@ -195,36 +199,38 @@ export default function AdminPage() {
 
         {/* Orders List */}
         {loading ? (
-          <div className="book-page" style={{ borderRadius: '4px', padding: '3rem', textAlign: 'center' }}>
-            <p style={{ color: '#7a7a5a', fontStyle: 'italic' }}>Loading orders...</p>
+          <div style={{ border: '2px solid #1a1a0e', padding: '4rem', textAlign: 'center', backgroundColor: '#FFFFE3' }}>
+            <p style={{ color: '#7a7a5a', fontStyle: 'italic', margin: 0 }}>Loading orders from Supabase...</p>
           </div>
         ) : filteredOrders.length === 0 ? (
-          <div className="book-page" style={{ borderRadius: '4px', padding: '3rem', textAlign: 'center' }}>
-            <p style={{ color: '#7a7a5a', fontStyle: 'italic' }}>No orders found.</p>
+          <div style={{ border: '2px solid #1a1a0e', padding: '4rem', textAlign: 'center', backgroundColor: '#FFFFE3' }}>
+            <p style={{ color: '#7a7a5a', fontStyle: 'italic', margin: 0 }}>No orders found.</p>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {filteredOrders.map(order => {
               const sc = statusColor(order.status);
               return (
-                <div key={order.id} className="book-page" style={{ borderRadius: '4px', padding: '1.2rem 1.5rem 1.2rem 2.5rem', cursor: 'pointer' }}
-                  onClick={() => setSelectedOrder(order)}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <div key={order.id} style={{ border: '2px solid #1a1a0e', padding: '1.5rem', cursor: 'pointer', backgroundColor: '#FFFFE3', transition: 'transform 0.15s' }}
+                  onClick={() => setSelectedOrder(order)}
+                  className="hover-card"
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                     <div>
-                      <p style={{ fontWeight: 700, fontSize: '1rem', color: '#1a1a0e', marginBottom: '0.2rem' }}>{order.name}</p>
-                      <p style={{ fontSize: '0.82rem', color: '#7a7a5a' }}>{order.email} · {order.phone}</p>
-                      <p style={{ fontSize: '0.82rem', color: '#7a7a5a', marginTop: '0.2rem' }}>{order.city}, {order.state} - {order.pincode}</p>
+                      <p style={{ fontWeight: 800, fontSize: '1.1rem', color: '#1a1a0e', margin: '0 0 0.4rem 0' }}>{order.name}</p>
+                      <p style={{ fontSize: '0.85rem', color: '#3a3a2a', margin: 0 }}>{order.email} &bull; {order.phone}</p>
+                      <p style={{ fontSize: '0.85rem', color: '#7a7a5a', marginTop: '0.3rem', margin: 0 }}>{order.city}, {order.state} - {order.pincode}</p>
                     </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <p className="display-font" style={{ fontSize: '1.3rem', color: '#8B4513', fontWeight: 700 }}>₹{order.total}</p>
+                    <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.4rem' }}>
+                      <p style={{ fontSize: '1.4rem', color: '#1a1a0e', fontWeight: 800, margin: 0 }}>₹{order.total}</p>
                       <span style={{ 
-                        fontSize: '0.72rem', padding: '0.2rem 0.6rem', borderRadius: '20px',
-                        backgroundColor: sc.bg, color: sc.color, border: `1px solid ${sc.border}`,
-                        fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em'
+                        fontSize: '0.72rem', padding: '0.3rem 0.8rem', borderRadius: '0px',
+                        backgroundColor: sc.bg, color: '#1a1a0e', border: `1px solid ${sc.border}`,
+                        fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em'
                       }}>
                         {order.status}
                       </span>
-                      <p style={{ fontSize: '0.72rem', color: '#aaa', marginTop: '0.3rem' }}>
+                      <p style={{ fontSize: '0.75rem', color: '#7a7a5a', margin: 0 }}>
                         {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </p>
                     </div>
@@ -238,14 +244,14 @@ export default function AdminPage() {
 
       {/* Order Detail Modal */}
       {selectedOrder && (
-        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: '1rem' }}>
-          <div className="book-page" style={{ borderRadius: '6px', padding: '2rem', maxWidth: '560px', width: '100%', maxHeight: '90vh', overflowY: 'auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h2 className="display-font" style={{ fontSize: '1.4rem', color: '#1a1a0e' }}>Order Details</h2>
-              <button onClick={() => setSelectedOrder(null)} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', color: '#7a7a5a' }}>✕</button>
+        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(26,26,14,0.65)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: '1rem', backdropFilter: 'blur(4px)' }}>
+          <div style={{ backgroundColor: '#FFFFE3', border: '2px solid #1a1a0e', borderRadius: '0px', padding: '2.5rem', maxWidth: '560px', width: '100%', maxHeight: '90vh', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+              <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#1a1a0e', letterSpacing: '-0.02em', margin: 0 }}>Order Details</h2>
+              <button onClick={() => setSelectedOrder(null)} style={{ background: 'none', border: 'none', fontSize: '1.8rem', cursor: 'pointer', color: '#1a1a0e', fontWeight: 'bold', padding: 0 }}>&times;</button>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '2rem' }}>
               {[
                 ['Name', selectedOrder.name],
                 ['Phone', selectedOrder.phone],
@@ -256,29 +262,29 @@ export default function AdminPage() {
                 ['Pincode', selectedOrder.pincode],
                 ['Book Price', `₹${selectedOrder.book_price}`],
                 ['Courier Fee', `₹${selectedOrder.courier_fee}`],
-                ['Total', `₹${selectedOrder.total}`],
+                ['Total Paid', `₹${selectedOrder.total}`],
                 ['Ordered On', new Date(selectedOrder.created_at).toLocaleString('en-IN')],
               ].map(([label, value]) => (
-                <div key={label} style={{ display: 'flex', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.8rem', color: '#7a7a5a', minWidth: '90px', fontWeight: 600 }}>{label}:</span>
-                  <span style={{ fontSize: '0.85rem', color: '#1a1a0e' }}>{value}</span>
+                <div key={label} style={{ display: 'flex', borderBottom: '1px solid rgba(26,26,14,0.06)', paddingBottom: '0.4rem' }}>
+                  <span style={{ fontSize: '0.82rem', color: '#7a7a5a', minWidth: '110px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.02em' }}>{label}:</span>
+                  <span style={{ fontSize: '0.9rem', color: '#1a1a0e', fontWeight: 600 }}>{value}</span>
                 </div>
               ))}
             </div>
 
             {/* Screenshot */}
             {selectedOrder.screenshot_url && (
-              <div style={{ marginBottom: '1.5rem' }}>
-                <p style={{ fontSize: '0.78rem', fontWeight: 700, color: '#3a3a2a', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Payment Screenshot</p>
+              <div style={{ marginBottom: '2rem' }}>
+                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#1a1a0e', marginBottom: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Payment Screenshot</p>
                 <a href={selectedOrder.screenshot_url} target="_blank" rel="noopener noreferrer">
-                  <img src={selectedOrder.screenshot_url} alt="Payment screenshot" style={{ maxWidth: '100%', borderRadius: '4px', border: '1px solid #c8c89a' }} />
+                  <img src={selectedOrder.screenshot_url} alt="Payment screenshot" style={{ maxWidth: '100%', borderRadius: '0px', border: '2px solid #1a1a0e' }} />
                 </a>
               </div>
             )}
 
             {/* Status Update */}
             <div>
-              <p style={{ fontSize: '0.78rem', fontWeight: 700, color: '#3a3a2a', marginBottom: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Update Status</p>
+              <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#1a1a0e', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Update Status</p>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 {['pending', 'confirmed', 'shipped', 'cancelled'].map(s => {
                   const sc = statusColor(s);
@@ -286,13 +292,15 @@ export default function AdminPage() {
                     <button key={s} onClick={() => updateStatus(selectedOrder.id, s)}
                       disabled={updating === selectedOrder.id}
                       style={{
-                        padding: '0.4rem 0.9rem', borderRadius: '3px', cursor: 'pointer',
-                        fontSize: '0.8rem', fontFamily: "'Nunito', sans-serif", fontWeight: 700,
-                        textTransform: 'capitalize', transition: 'all 0.15s',
-                        border: selectedOrder.status === s ? `2px solid ${sc.color}` : `1px solid ${sc.border}`,
-                        backgroundColor: selectedOrder.status === s ? sc.bg : '#FFFFF0',
-                        color: sc.color,
-                      }}>
+                        padding: '0.5rem 1rem', borderRadius: '0px', cursor: 'pointer',
+                        fontSize: '0.8rem', fontWeight: 800,
+                        textTransform: 'uppercase', letterSpacing: '0.05em', transition: 'all 0.15s',
+                        border: selectedOrder.status === s ? '2px solid #1a1a0e' : `1px solid rgba(26,26,14,0.25)`,
+                        backgroundColor: selectedOrder.status === s ? sc.bg : 'transparent',
+                        color: '#1a1a0e',
+                      }}
+                      className={selectedOrder.status !== s ? "hover-cta" : ""}
+                    >
                       {s}
                     </button>
                   );

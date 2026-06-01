@@ -156,3 +156,12 @@ input, textarea, select {
     display: none !important;
   }
 }
+
+/* Card hover animation for admin area */
+.hover-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.hover-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 26, 14, 0.08);
+}
