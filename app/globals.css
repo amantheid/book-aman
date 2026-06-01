@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #FFFFE3;
+  --ink: #1a1a0e;
+  --ink-light: #3a3a2a;
+  --ink-faint: #7a7a5a;
+  --accent: #8B4513;
+  --accent-light: #c4732a;
+  --paper: #FFFFF0;
+  --paper-dark: #F5F5D0;
+  --border: #c8c89a;
+  
+  /* Book cover specific accent colors */
+  --book-amber: #D97706;
+  --book-blue: #1D4ED8;
+  --book-dark: #1a1a0e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100vh;
+}
+
+/* Book page texture effect */
+.book-page {
+  background-color: var(--paper);
+  border: 1px solid var(--border);
+  box-shadow: 
+    2px 2px 0px #d4d4a0,
+    4px 4px 0px #c8c880,
+    inset 0 0 60px rgba(0,0,0,0.03);
+  position: relative;
+}
+
+.book-page::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(139, 69, 19, 0.15);
+}
+
+.display-font {
+  font-family: 'Playfair Display', serif;
+}
+
+.chapter-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--accent);
+  margin: 2rem 0;
+}
+
+.chapter-divider::before,
+.chapter-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+input, textarea, select {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.page-number {
+  font-family: 'Playfair Display', serif;
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.fade-in-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.fade-in-up-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.fade-in-up-delay-3 { animation-delay: 0.3s; opacity: 0; }
+.fade-in-up-delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+/* Micro-animations and hover transitions */
+.hover-cta:hover {
+  background-color: #2a2a1a !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 26, 14, 0.12);
+}
+.hover-cta:active {
+  transform: translateY(0);
+}
+
+.hover-cta-invert:hover {
+  background-color: #eaeaba !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 227, 0.08);
+}
+.hover-cta-invert:active {
+  transform: translateY(0);
+}
+
+.book-mockup-wrapper:hover {
+  transform: translateY(-4px) rotate(1deg) scale(1.02);
+}
+
+/* Responsive Grid and Layout Adjustments */
+@media (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 3.5rem !important;
+    padding: 3rem 1rem 4rem 1rem !important;
+    text-align: center;
+  }
+  .hero-text {
+    align-items: center;
+  }
+  .cta-container {
+    align-items: center !important;
+    width: 100%;
+  }
+  .hover-cta {
+    max-width: 100% !important;
+  }
+  .features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+  .features-box {
+    padding: 1.5rem !important;
+  }
+  .traits-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .desktop-only {
+    display: none !important;
+  }
+}
