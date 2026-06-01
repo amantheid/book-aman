@@ -81,6 +81,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Failed to save order' }, { status: 500 });
     }
 
+    // Resend configuration & Sandbox validation
+    const senderEmail = process.env.SENDER_EMAIL || 'Creative Constructor <onboarding@resend.dev>';
+    const isSandbox = senderEmail.includes('onboarding@resend.dev');
+
+    // In sandbox mode, send customer confirmation to the admin's verified email so they can preview it
+    const customerEmailRecipient = isSandbox ? 'amantheid@gmail.com' : email;
+    const subjectPrefix = isSandbox ? '[TEST COPY] ' : '';
+
     // Email 1 — Send customer confirmation email immediately
     const customerEmailHtml = `
       <div style="background-color: #FFFFE3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 3rem 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 2px solid #1a1a0e;">
@@ -121,18 +129,22 @@ export async function POST(req: NextRequest) {
     `;
 
     try {
-      await resend.emails.send({
-        from: 'Creative Constructor <onboarding@resend.dev>',
-        to: email,
-        subject: 'Your Pre-Order is Received! 📖',
+      const response = await resend.emails.send({
+        from: senderEmail,
+        to: customerEmailRecipient,
+        subject: `${subjectPrefix}Your Pre-Order is Received! 📖`,
         html: customerEmailHtml
       });
-      console.log('Customer pre-order received email sent successfully.');
+      if (response.error) {
+        console.error('Resend customer email error:', response.error);
+      } else {
+        console.log('Customer confirmation email sent successfully. ID:', response.data?.id);
+      }
     } catch (err) {
       console.error('Error sending customer confirmation email:', err);
     }
 
-    // Email 3 — Send admin notification email
+    // Email 3 — Send admin notification email (always to amantheid@gmail.com)
     const adminEmailHtml = `
       <div style="font-family: sans-serif; padding: 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 1px solid #ccc;">
         <h2>New Book Order #${orderNumber}</h2>
@@ -173,13 +185,17 @@ export async function POST(req: NextRequest) {
     `;
 
     try {
-      await resend.emails.send({
-        from: 'Creative Constructor <onboarding@resend.dev>',
+      const response = await resend.emails.send({
+        from: senderEmail,
         to: 'amantheid@gmail.com',
         subject: `New Book Order #${orderNumber}`,
         html: adminEmailHtml
       });
-      console.log('Admin notification email sent successfully.');
+      if (response.error) {
+        console.error('Resend admin notification email error:', response.error);
+      } else {
+        console.log('Admin notification email sent successfully. ID:', response.data?.id);
+      }
     } catch (err) {
       console.error('Error sending admin notification email:', err);
     }

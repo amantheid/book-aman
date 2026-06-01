@@ -51,7 +51,13 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: updateError.message }, { status: 500 });
   }
 
-  // If status is updated to confirmed and it wasn't already confirmed, send the email
+  // Resend configuration & Sandbox validation
+  const senderEmail = process.env.SENDER_EMAIL || 'Creative Constructor <onboarding@resend.dev>';
+  const isSandbox = senderEmail.includes('onboarding@resend.dev');
+  const recipient = isSandbox ? 'amantheid@gmail.com' : order.email;
+  const subjectPrefix = isSandbox ? '[TEST COPY] ' : '';
+
+  // Case 1: Order is confirmed
   if (status === 'confirmed' && order.status !== 'confirmed') {
     const customerConfirmedEmailHtml = `
       <div style="background-color: #FFFFE3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 3rem 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 2px solid #1a1a0e;">
@@ -84,15 +90,72 @@ export async function PATCH(req: NextRequest) {
     `;
 
     try {
-      await resend.emails.send({
-        from: 'Creative Constructor <onboarding@resend.dev>',
-        to: order.email,
-        subject: 'Your Order is Confirmed! 🎉',
+      const response = await resend.emails.send({
+        from: senderEmail,
+        to: recipient,
+        subject: `${subjectPrefix}Your Order is Confirmed! 🎉`,
         html: customerConfirmedEmailHtml
       });
-      console.log('Customer order confirmation email sent successfully.');
+      if (response.error) {
+        console.error('Resend customer confirmation email error:', response.error);
+      } else {
+        console.log('Customer confirmation email sent successfully. ID:', response.data?.id);
+      }
     } catch (err) {
       console.error('Error sending customer order confirmation email:', err);
+    }
+  }
+
+  // Case 2: Order is cancelled
+  if (status === 'cancelled' && order.status !== 'cancelled') {
+    const customerCancelledEmailHtml = `
+      <div style="background-color: #FFFFE3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 3rem 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 2px solid #1a1a0e;">
+        <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: #7a7a5a; margin: 0 0 1rem 0;">Aman Muhammed</p>
+        <h1 style="font-size: 2.0rem; font-weight: 900; letter-spacing: -0.02em; color: #000000; margin: 0 0 1.5rem 0; line-height: 1.15;">Update on Your Pre-Order</h1>
+        
+        <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 1.5rem;">
+          Dear ${order.name},
+        </p>
+        <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 1.5rem;">
+          Thank you for your interest in pre-ordering <strong>The 21 Days That Built a Creative Constructor</strong>.
+        </p>
+        <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 1.5rem;">
+          We are writing to inform you that your pre-order status has been updated to <strong>cancelled</strong>. This generally happens when we are unable to verify the transaction details or matching payment screenshot uploaded during the order.
+        </p>
+        <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 2rem;">
+          If this was unintentional or if you would like to try placing your pre-order again, please visit the website to re-submit your details. We would be glad to receive your order!
+        </p>
+
+        <div style="text-align: center; margin: 2.5rem 0;">
+          <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://book.aman'}" style="display: inline-block; background-color: #000000; color: #FFFFE3; padding: 1.1rem 2.2rem; text-decoration: none; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem;">
+            Visit Pre-Order Site &rarr;
+          </a>
+        </div>
+
+        <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 2rem;">
+          If you have already paid and believe this cancellation was a mistake, please reply directly to this email or send us a message at amantheid@gmail.com with your transaction reference. We will assist you as soon as possible.
+        </p>
+        
+        <p style="font-size: 0.8rem; color: #7a7a5a; text-align: center; margin-top: 3rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+          &copy; ${new Date().getFullYear()} Aman Muhammed. All rights reserved.
+        </p>
+      </div>
+    `;
+
+    try {
+      const response = await resend.emails.send({
+        from: senderEmail,
+        to: recipient,
+        subject: `${subjectPrefix}Update on Your Pre-Order`,
+        html: customerCancelledEmailHtml
+      });
+      if (response.error) {
+        console.error('Resend customer cancellation email error:', response.error);
+      } else {
+        console.log('Customer cancellation email sent successfully. ID:', response.data?.id);
+      }
+    } catch (err) {
+      console.error('Error sending customer cancellation email:', err);
     }
   }
 

@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 
 const faqs = [
   {
@@ -21,7 +22,7 @@ const faqs = [
   },
   {
     q: "How many copies are available?",
-    a: "Only 100 copies in the first edition. Several are already reserved. Once sold out, the next batch may take time to arrive."
+    a: "Only 90 copies in the first edition. Several are already reserved. Once sold out, the next batch may take time to arrive."
   },
   {
     q: "Who is this book for?",
@@ -48,10 +49,34 @@ const faqs = [
 export default function Home() {
   const [showOrder, setShowOrder] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [confirmedCount, setConfirmedCount] = useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
+
+  useEffect(() => {
+    const fetchConfirmedCount = async () => {
+      try {
+        const { count, error } = await supabase
+          .from('orders')
+          .select('*', { count: 'exact', head: true })
+          .eq('status', 'confirmed');
+        
+        if (!error && count !== null) {
+          setConfirmedCount(count);
+        }
+      } catch (err) {
+        console.error("Error fetching confirmed orders count:", err);
+      }
+    };
+
+    fetchConfirmedCount();
+  }, []);
+
+  const totalLimit = 90;
+  const remainingCopies = confirmedCount !== null ? Math.max(0, totalLimit - confirmedCount) : null;
+  const isSoldOut = remainingCopies === 0;
 
   return (
     <main style={{ backgroundColor: '#FFFFE3', minHeight: '100vh', color: '#000000' }}>
@@ -68,7 +93,7 @@ export default function Home() {
           AMAN MUHAMMED
         </div>
         <div style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', color: '#000000', textTransform: 'uppercase' }}>
-          First Edition &middot; 100 Copies
+          {remainingCopies !== null ? `First Edition · ${remainingCopies} Copies Left` : "First Edition · 90 Copies"}
         </div>
       </header>
 
@@ -154,15 +179,16 @@ export default function Home() {
             {/* CTA Button only */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }} className="cta-container">
               <button
-                onClick={() => setShowOrder(true)}
+                onClick={() => !isSoldOut && setShowOrder(true)}
+                disabled={isSoldOut}
                 style={{
-                  backgroundColor: '#000000',
+                  backgroundColor: isSoldOut ? '#7a7a5a' : '#000000',
                   color: '#FFFFE3',
                   border: 'none',
                   padding: '1.3rem 2.5rem',
                   fontSize: '1.1rem',
                   fontWeight: 800,
-                  cursor: 'pointer',
+                  cursor: isSoldOut ? 'not-allowed' : 'pointer',
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   transition: 'all 0.2s ease',
@@ -171,10 +197,15 @@ export default function Home() {
                   maxWidth: '360px',
                   textAlign: 'center'
                 }}
-                className="hover-cta"
+                className={isSoldOut ? "" : "hover-cta"}
               >
-                Pre-Order Now &mdash; ₹299
+                {isSoldOut ? "Sold Out" : "Pre-Order Now — ₹299"}
               </button>
+              {remainingCopies !== null && (
+                <p style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#000000', margin: '0.25rem 0 0 0' }}>
+                  {isSoldOut ? "First batch sold out. Join waitlist shortly." : `Only ${remainingCopies} copies left in the first batch.`}
+                </p>
+              )}
             </div>
           </div>
 
@@ -428,26 +459,27 @@ export default function Home() {
             Start Small. Stay Consistent. <br /> Build Impact.
           </h2>
           <p style={{ fontSize: '1rem', color: '#a0a07a', margin: '0 0 2.5rem 0', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            Only 100 copies available in the first batch.
+            Only 90 copies available in the first batch.
           </p>
           <button
-            onClick={() => setShowOrder(true)}
+            onClick={() => !isSoldOut && setShowOrder(true)}
+            disabled={isSoldOut}
             style={{
-              backgroundColor: '#FFFFE3',
+              backgroundColor: isSoldOut ? '#7a7a5a' : '#FFFFE3',
               color: '#000000',
               border: 'none',
               padding: '1.2rem 3rem',
               fontSize: '1rem',
               fontWeight: 800,
-              cursor: 'pointer',
+              cursor: isSoldOut ? 'not-allowed' : 'pointer',
               letterSpacing: '0.08em',
               textTransform: 'uppercase',
               borderRadius: '0px',
               transition: 'all 0.2s ease'
             }}
-            className="hover-cta-invert"
+            className={isSoldOut ? "" : "hover-cta-invert"}
           >
-            Pre-Order Now &mdash; ₹299
+            {isSoldOut ? "Sold Out" : "Pre-Order Now — ₹299"}
           </button>
         </div>
       </section>
