@@ -250,7 +250,7 @@ export default function PreOrderPage() {
               boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
             }}>
               <Image 
-                src="/qr.jpeg" 
+                src="/qr.png" 
                 alt="UPI QR Code" 
                 width={180} 
                 height={180} 
