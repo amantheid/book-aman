@@ -155,19 +155,18 @@ export default function Home() {
 
             {/* Title & Tagline & Emotional Intro */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <h1 style={{
-                fontSize: 'clamp(2.5rem, 5.5vw, 4.2rem)',
-                lineHeight: 1.0,
-                fontWeight: 900,
-                letterSpacing: '-0.04em',
-                color: '#000000',
-                margin: 0,
-              }}>
-                The 21 Days <br />
-                That Built a <br />
-                Creative <br />
-                Constructor
-              </h1>
+              <img
+                src="/logo.jpg"
+                alt="The 21 Days That Built a Creative Constructor Logo"
+                style={{
+                  width: '100%',
+                  maxWidth: '380px',
+                  height: 'auto',
+                  display: 'block',
+                  mixBlendMode: 'multiply',
+                  margin: '0 0 -0.5rem -1.2rem',
+                }}
+              />
               
               <p style={{
                 fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)',
