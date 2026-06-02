@@ -223,23 +223,52 @@ export default function PreOrderPage() {
           )}
 
           {/* QR Code Container */}
-          <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-            <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#1a1a0e', marginBottom: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Scan &amp; Pay {form.state ? `₹${total}` : ''}
-            </p>
-            <div style={{ 
-              display: 'inline-block', border: '2px solid #1a1a0e', 
-              padding: '1rem', backgroundColor: '#fff',
-              borderRadius: '0px'
+          <div style={{ 
+            marginTop: '2rem', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            gap: '1rem' 
+          }}>
+            <p style={{ 
+              fontSize: '0.75rem', 
+              fontWeight: 800, 
+              color: '#1a1a0e', 
+              textTransform: 'uppercase', 
+              letterSpacing: '0.05em',
+              margin: 0
             }}>
-              <Image src="/qr.jpeg" alt="UPI QR Code" width={200} height={200} style={{ display: 'block' }} />
+              Scan to Pay {form.state ? `₹${total}` : ''}
+            </p>
+            
+            <div style={{ 
+              display: 'inline-block', 
+              border: '1px solid rgba(26,26,14,0.15)', 
+              padding: '0.75rem', 
+              backgroundColor: '#ffffff',
+              borderRadius: '0px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+            }}>
+              <Image 
+                src="/qr.jpeg" 
+                alt="UPI QR Code" 
+                width={180} 
+                height={180} 
+                style={{ display: 'block' }} 
+              />
             </div>
-            <p style={{ fontSize: '0.85rem', color: '#1a1a0e', fontWeight: 700, marginTop: '0.75rem', letterSpacing: '0.02em' }}>UPI ID: hadimehthash2023@oksbi</p>
-            {form.state && (
-              <p style={{ fontSize: '0.9rem', color: '#D97706', fontWeight: 800, marginTop: '0.4rem' }}>
-                Please transfer exactly ₹{total}
+
+            <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+              <p style={{ fontSize: '0.9rem', color: '#1a1a0e', fontWeight: 700, margin: 0 }}>
+                UPI ID: <span style={{ fontFamily: 'monospace', fontWeight: 600 }}>hadimehthash2023@oksbi</span>
               </p>
-            )}
+              <p style={{ fontSize: '0.9rem', color: '#1a1a0e', fontWeight: 700, margin: 0 }}>
+                UPI Number: <span style={{ fontFamily: 'monospace', fontWeight: 600 }}>9656324645</span>
+              </p>
+              <p style={{ fontSize: '0.75rem', color: '#7a7a5a', fontWeight: 600, marginTop: '0.4rem', margin: 0 }}>
+                Pay exact amount shown above
+              </p>
+            </div>
           </div>
 
           {/* Payment Proof Screenshot Upload */}
