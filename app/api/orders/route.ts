@@ -41,6 +41,8 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: 'Order not found' }, { status: 404 });
   }
 
+  const customer = { email: order.email };
+
   // Update order status in database
   const { error: updateError } = await supabaseAdmin
     .from('orders')
@@ -95,9 +97,10 @@ export async function PATCH(req: NextRequest) {
       console.log('Subject:', `${subjectPrefix}Your Order is Confirmed! 🎉`);
       console.log('------------------------------------------------');
 
+      console.log('SENDING CUSTOMER CONFIRMED EMAIL TO (exact value):', customer.email);
       const response = await resend.emails.send({
         from: senderEmail,
-        to: order.email, // Directly to customer's email
+        to: customer.email,
         subject: `${subjectPrefix}Your Order is Confirmed! 🎉`,
         html: customerConfirmedEmailHtml
       });
@@ -157,9 +160,10 @@ export async function PATCH(req: NextRequest) {
       console.log('Subject:', `${subjectPrefix}Update on Your Pre-Order`);
       console.log('------------------------------------------------');
 
+      console.log('SENDING CUSTOMER CANCELLED EMAIL TO (exact value):', customer.email);
       const response = await resend.emails.send({
         from: senderEmail,
-        to: order.email, // Directly to customer's email
+        to: customer.email,
         subject: `${subjectPrefix}Update on Your Pre-Order`,
         html: customerCancelledEmailHtml
       });
@@ -221,9 +225,10 @@ export async function PATCH(req: NextRequest) {
       console.log('Subject:', `${subjectPrefix}Your Book is on the Way! 📦`);
       console.log('----------------------------------------------');
 
+      console.log('SENDING CUSTOMER SHIPPED EMAIL TO (exact value):', customer.email);
       const response = await resend.emails.send({
         from: senderEmail,
-        to: order.email, // Directly to customer's email
+        to: customer.email,
         subject: `${subjectPrefix}Your Book is on the Way! 📦`,
         html: customerShippedEmailHtml
       });

@@ -11,6 +11,7 @@ export async function POST(req: NextRequest) {
     const name = formData.get('name') as string;
     const phone = formData.get('phone') as string;
     const email = formData.get('email') as string;
+    const customer = { email };
     const address = formData.get('address') as string;
     const city = formData.get('city') as string;
     const state = formData.get('state') as string;
@@ -132,9 +133,10 @@ export async function POST(req: NextRequest) {
       console.log('Subject:', `${subjectPrefix}Your Pre-Order is Received! 📖`);
       console.log('------------------------------------');
       
+      console.log('SENDING CUSTOMER EMAIL TO (exact value):', customer.email);
       const response = await resend.emails.send({
         from: senderEmail,
-        to: email, // Directly to customer
+        to: customer.email,
         subject: `${subjectPrefix}Your Pre-Order is Received! 📖`,
         html: customerEmailHtml
       });
