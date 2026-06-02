@@ -128,9 +128,9 @@ export default function Home() {
         }} className="hero-grid">
           
           {/* Left Column: Typography & CTA */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }} className="hero-text">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} className="hero-text">
             {/* Author / Details */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
               <p style={{
                 fontSize: '0.75rem',
                 fontWeight: 800,
@@ -152,19 +152,19 @@ export default function Home() {
                 Founder &bull; Student &bull; Entrepreneur
               </p>
             </div>
-
+ 
             {/* Title & Tagline & Emotional Intro */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <img
                 src="/logo.jpg"
                 alt="The 21 Days That Built a Creative Constructor Logo"
                 style={{
                   width: '100%',
-                  maxWidth: '380px',
+                  maxWidth: '300px',
                   height: 'auto',
                   display: 'block',
                   mixBlendMode: 'multiply',
-                  margin: '0 0 -0.5rem -1.2rem',
+                  margin: '0 0 0 -0.4rem',
                 }}
               />
               
@@ -179,13 +179,13 @@ export default function Home() {
               }}>
                 How a 15-Year-Old Built Skills, Systems and Momentum From Zero
               </p>
-
+ 
               <p style={{
                 fontSize: '1.05rem',
                 lineHeight: 1.7,
                 fontWeight: 500,
                 color: '#2a2a2a',
-                margin: '0.5rem 0 0 0',
+                margin: 0,
                 maxWidth: '460px',
               }}>
                 Most people spend their lives consuming. Watching. Scrolling. Waiting. <br />
