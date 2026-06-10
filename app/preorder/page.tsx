@@ -250,20 +250,17 @@ export default function PreOrderPage() {
               boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
             }}>
               <Image 
-                src="/qr.png" 
+                src="/qr.jpg" 
                 alt="UPI QR Code" 
-                width={180} 
-                height={180} 
+                width={250} 
+                height={400} 
                 style={{ display: 'block' }} 
               />
             </div>
 
             <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
               <p style={{ fontSize: '0.9rem', color: '#1a1a0e', fontWeight: 700, margin: 0 }}>
-                UPI ID: <span style={{ fontFamily: 'monospace', fontWeight: 600 }}>hadimehthash2023@oksbi</span>
-              </p>
-              <p style={{ fontSize: '0.9rem', color: '#1a1a0e', fontWeight: 700, margin: 0 }}>
-                UPI Number: <span style={{ fontFamily: 'monospace', fontWeight: 600 }}>9656324645</span>
+                UPI ID: <span style={{ fontFamily: 'monospace', fontWeight: 600 }}>fasalpannur@icici</span>
               </p>
               <p style={{ fontSize: '0.75rem', color: '#7a7a5a', fontWeight: 600, marginTop: '0.4rem', margin: 0 }}>
                 Pay exact amount shown above
