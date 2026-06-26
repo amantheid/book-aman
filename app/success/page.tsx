@@ -25,7 +25,7 @@ export default function SuccessPage() {
             textAlign: 'left'
           }}>
             <p style={{ fontSize: '0.95rem', color: '#000000', lineHeight: 1.6, margin: 0, fontWeight: 600 }}>
-              📦 Your book will be shipped from Kozhikode in the <strong>2nd week of June</strong>. You will receive your tracking details via email.
+              📦 Your book will be shipped from Kozhikode in <strong>2-7 days</strong>. You will receive your tracking details via email.
             </p>
           </div>
 

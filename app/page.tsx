@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 const faqs = [
   {
     q: "When will I receive my book?",
-    a: "The first edition ships in the 2nd week of June. You will receive a confirmation email once your payment is verified."
+    a: "The book ships in 2-7 days. You will receive a confirmation email once your payment is verified."
   },
   {
     q: "What is the price?",

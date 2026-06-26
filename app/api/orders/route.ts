@@ -70,7 +70,7 @@ export async function PATCH(req: NextRequest) {
 
         <div style="background-color: #000000; color: #FFFFE3; padding: 1.5rem 2rem; text-align: center; margin-bottom: 2rem;">
           <p style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.5rem 0; color: #a0a07a;">Expected Shipping</p>
-          <p style="font-size: 1.3rem; font-weight: 800; margin: 0;">Second Week of June</p>
+          <p style="font-size: 1.3rem; font-weight: 800; margin: 0;">2-7 Days</p>
         </div>
         
         <div style="border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); padding: 1.5rem 0; margin-bottom: 2rem;">
@@ -195,7 +195,7 @@ export async function PATCH(req: NextRequest) {
           <p style="font-size: 1.25rem; font-weight: 800; margin: 0 0 1.25rem 0;">India Post Speed Post</p>
           
           <p style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.5rem 0; color: #a0a07a;">Expected Delivery</p>
-          <p style="font-size: 1.25rem; font-weight: 800; margin: 0;">3 to 7 Working Days</p>
+          <p style="font-size: 1.25rem; font-weight: 800; margin: 0;">2-7 Days</p>
         </div>
         
         <div style="border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); padding: 1.5rem 0; margin-bottom: 2rem;">
