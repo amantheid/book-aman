@@ -91,9 +91,9 @@ export async function POST(req: NextRequest) {
     const customerEmailHtml = `
       <div style="background-color: #FFFFE3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 3rem 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 2px solid #1a1a0e;">
         <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: #7a7a5a; margin: 0 0 1rem 0;">Aman Muhammed</p>
-        <h1 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.03em; color: #000000; margin: 0 0 1.5rem 0; line-height: 1.1;">Your Pre-Order is Received! 📖</h1>
+        <h1 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.03em; color: #000000; margin: 0 0 1.5rem 0; line-height: 1.1;">Your Order is Received! 📖</h1>
         <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 2rem;">
-          Thank you for pre-ordering <strong>The 21 Days That Built a Creative Constructor</strong>. We have received your order details and payment screenshot. Our team will verify the payment and confirm shortly.
+          Thank you for ordering <strong>The 21 Days That Built a Creative Constructor</strong>. We have received your order details and payment screenshot. Our team will verify the payment and confirm shortly.
         </p>
         
         <div style="border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); padding: 1.5rem 0; margin-bottom: 2rem;">
@@ -130,14 +130,14 @@ export async function POST(req: NextRequest) {
       console.log('--- RESEND EMAIL SENDING ATTEMPT ---');
       console.log('From address:', senderEmail);
       console.log('To address (customer):', email);
-      console.log('Subject:', `${subjectPrefix}Your Pre-Order is Received! 📖`);
+      console.log('Subject:', `${subjectPrefix}Your Order is Received! 📖`);
       console.log('------------------------------------');
       
       console.log('SENDING CUSTOMER EMAIL TO (exact value):', customer.email);
       const response = await resend.emails.send({
         from: senderEmail,
         to: customer.email,
-        subject: `${subjectPrefix}Your Pre-Order is Received! 📖`,
+        subject: `${subjectPrefix}Your Order is Received! 📖`,
         html: customerEmailHtml
       });
       if (response.error) {
@@ -156,7 +156,7 @@ export async function POST(req: NextRequest) {
     const adminEmailHtml = `
       <div style="font-family: sans-serif; padding: 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 1px solid #ccc;">
         <h2>New Book Order #${orderNumber}</h2>
-        <p>A new pre-order has been placed on the website.</p>
+        <p>A new order has been placed on the website.</p>
         
         <table style="width: 100%; border-collapse: collapse; margin-top: 1.5rem;">
           <tr>

@@ -1,4 +1,4 @@
-# The 21 Days That Built a Creative Constructor — Pre-Order Website
+# The 21 Days That Built a Creative Constructor — Order Website
 
 ## Tech Stack
 - **Next.js 15** (App Router)
@@ -46,7 +46,7 @@ Open http://localhost:3000
 | Route | Description |
 |-------|-------------|
 | `/` | Landing page with book details |
-| `/preorder` | Pre-order form |
+| `/preorder` | Order form |
 | `/success` | Order confirmation page |
 | `/admin` | Admin panel (login required) |
 

@@ -165,3 +165,9 @@ input, textarea, select {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(26, 26, 14, 0.08);
 }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+

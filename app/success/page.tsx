@@ -14,7 +14,7 @@ export default function SuccessPage() {
             You&apos;re on the list!
           </h1>
           <p style={{ fontSize: '1rem', lineHeight: 1.7, color: '#2a2a2a', marginBottom: '2rem' }}>
-            Your pre-order has been received. We will verify your payment details and send a confirmation email to you shortly.
+            Your order has been received. We will verify your payment details and send a confirmation email to you shortly.
           </p>
 
           <div style={{ 

@@ -81,7 +81,6 @@ export default function PreOrderPage() {
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Something went wrong. Please try again.";
       setError(msg);
-    } finally {
       setLoading(false);
     }
   };
@@ -113,7 +112,7 @@ export default function PreOrderPage() {
             Secure Your Copy
           </p>
           <h1 style={{ fontSize: '2rem', fontWeight: 800, color: '#1a1a0e', marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
-            Pre-Order Form
+            Order Form
           </h1>
           <p style={{ fontSize: '0.95rem', color: '#3a3a2a', marginBottom: '2rem', lineHeight: 1.5 }}>
             Fill in your details, scan the UPI QR code to pay, and upload your payment screenshot.
@@ -322,11 +321,30 @@ export default function PreOrderPage() {
               fontWeight: 800, borderRadius: '0px',
               cursor: loading ? 'not-allowed' : 'pointer',
               letterSpacing: '0.08em', textTransform: 'uppercase',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.6rem'
             }}
-            className="hover-cta"
+            className={loading ? "" : "hover-cta"}
           >
-            {loading ? 'Submitting...' : 'Submit Pre-Order →'}
+            {loading ? (
+              <>
+                <span style={{
+                  display: 'inline-block',
+                  width: '1.1rem',
+                  height: '1.1rem',
+                  border: '2px solid #FFFFE3',
+                  borderTopColor: 'transparent',
+                  borderRadius: '50%',
+                  animation: 'spin 0.8s linear infinite'
+                }} />
+                Submitting...
+              </>
+            ) : (
+              'Submit Order →'
+            )}
           </button>
 
           <p style={{ fontSize: '0.75rem', color: '#7a7a5a', textAlign: 'center', marginTop: '1rem', fontWeight: 600 }}>

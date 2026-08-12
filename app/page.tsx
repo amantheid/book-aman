@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "How many copies are available?",
-    a: "Only 55 copies in the first edition. Several are already reserved. Once sold out, the next batch may take time to arrive."
+    a: "Only 47 copies in the first edition. Several are already reserved. Once sold out, the next batch may take time to arrive."
   },
   {
     q: "Who is this book for?",
@@ -30,11 +30,11 @@ const faqs = [
   },
   {
     q: "Can I cancel my order?",
-    a: "Since this is a limited first edition pre-order, cancellations are not possible once payment is made."
+    a: "Since this is a limited first edition order, cancellations are not possible once payment is made."
   },
   {
     q: "Is this book only available online?",
-    a: "Yes, the first edition is exclusively available through this website as a pre-order."
+    a: "Yes, the first edition is exclusively available through this website as an order."
   },
   {
     q: "What language is the book in?",
@@ -92,7 +92,7 @@ export default function Home() {
     };
   }, []);
 
-  const totalLimit = 55;
+  const totalLimit = 47;
   const remainingCopies = confirmedCount !== null ? Math.max(0, totalLimit - confirmedCount) : null;
   const isSoldOut = remainingCopies === 0;
 
@@ -111,7 +111,7 @@ export default function Home() {
           AMAN MUHAMMED
         </div>
         <div style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', color: '#000000', textTransform: 'uppercase' }}>
-          {remainingCopies !== null ? `First Edition · ${remainingCopies} Copies Left` : "First Edition · 55 Copies"}
+          {remainingCopies !== null ? `FIRST EDITION · ${remainingCopies} COPIES LEFT` : "FIRST EDITION · 47 COPIES LEFT"}
         </div>
       </header>
 
@@ -216,7 +216,7 @@ export default function Home() {
                 }}
                 className={isSoldOut ? "" : "hover-cta"}
               >
-                {isSoldOut ? "Sold Out" : "Pre-Order Now — ₹299"}
+                {isSoldOut ? "Sold Out" : "ORDER NOW — ₹299"}
               </button>
               {remainingCopies !== null && (
                 <p style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#000000', margin: '0.25rem 0 0 0' }}>
@@ -476,7 +476,7 @@ export default function Home() {
             Start Small. Stay Consistent. <br /> Build Impact.
           </h2>
           <p style={{ fontSize: '1rem', color: '#a0a07a', margin: '0 0 2.5rem 0', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            Only 55 copies available in the first batch.
+            Only 47 copies available in the first batch.
           </p>
           <button
             onClick={() => !isSoldOut && setShowOrder(true)}
@@ -496,7 +496,7 @@ export default function Home() {
             }}
             className={isSoldOut ? "" : "hover-cta-invert"}
           >
-            {isSoldOut ? "Sold Out" : "Pre-Order Now — ₹299"}
+            {isSoldOut ? "Sold Out" : "ORDER NOW — ₹299"}
           </button>
         </div>
       </section>
@@ -527,7 +527,7 @@ export default function Home() {
             position: 'relative'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#000000', margin: 0 }}>Pre-Order Your Copy</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#000000', margin: 0 }}>Order Your Copy</h2>
               <button 
                 onClick={() => setShowOrder(false)} 
                 style={{ 
@@ -562,7 +562,7 @@ export default function Home() {
               letterSpacing: '0.05em',
               transition: 'all 0.2s'
             }} className="hover-cta">
-              Go to Pre-Order Form &rarr;
+              Go to Order Form &rarr;
             </Link>
           </div>
         </div>

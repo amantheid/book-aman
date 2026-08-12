@@ -64,8 +64,11 @@ export async function PATCH(req: NextRequest) {
       <div style="background-color: #FFFFE3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 3rem 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 2px solid #1a1a0e;">
         <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: #7a7a5a; margin: 0 0 1rem 0;">Aman Muhammed</p>
         <h1 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.03em; color: #000000; margin: 0 0 1.5rem 0; line-height: 1.1;">Your Order is Confirmed! 🎉</h1>
+        <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 1rem;">
+          Great news! We have verified your payment, and your order is officially confirmed.
+        </p>
         <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 2rem;">
-          Great news! We have verified your payment, and your pre-order is officially confirmed.
+          Your book will be delivered within 7 days of your order.
         </p>
 
         <div style="background-color: #000000; color: #FFFFE3; padding: 1.5rem 2rem; text-align: center; margin-bottom: 2rem;">
@@ -122,24 +125,24 @@ export async function PATCH(req: NextRequest) {
     const customerCancelledEmailHtml = `
       <div style="background-color: #FFFFE3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 3rem 2rem; color: #1a1a0e; max-width: 600px; margin: 0 auto; border: 2px solid #1a1a0e;">
         <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: #7a7a5a; margin: 0 0 1rem 0;">Aman Muhammed</p>
-        <h1 style="font-size: 2.0rem; font-weight: 900; letter-spacing: -0.02em; color: #000000; margin: 0 0 1.5rem 0; line-height: 1.15;">Update on Your Pre-Order</h1>
+        <h1 style="font-size: 2.0rem; font-weight: 900; letter-spacing: -0.02em; color: #000000; margin: 0 0 1.5rem 0; line-height: 1.15;">Update on Your Order</h1>
         
         <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 1.5rem;">
           Dear ${order.name},
         </p>
         <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 1.5rem;">
-          Thank you for your interest in pre-ordering <strong>The 21 Days That Built a Creative Constructor</strong>.
+          Thank you for your interest in ordering <strong>The 21 Days That Built a Creative Constructor</strong>.
         </p>
         <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 1.5rem;">
-          We are writing to inform you that your pre-order status has been updated to <strong>cancelled</strong>. This generally happens when we are unable to verify the transaction details or matching payment screenshot uploaded during the order.
+          We are writing to inform you that your order status has been updated to <strong>cancelled</strong>. This generally happens when we are unable to verify the transaction details or matching payment screenshot uploaded during the order.
         </p>
         <p style="font-size: 1.05rem; line-height: 1.6; color: #2a2a2a; margin-bottom: 2rem;">
-          If this was unintentional or if you would like to try placing your pre-order again, please visit the website to re-submit your details. We would be glad to receive your order!
+          If this was unintentional or if you would like to try placing your order again, please visit the website to re-submit your details. We would be glad to receive your order!
         </p>
 
         <div style="text-align: center; margin: 2.5rem 0;">
           <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://book.aman'}" style="display: inline-block; background-color: #000000; color: #FFFFE3; padding: 1.1rem 2.2rem; text-decoration: none; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem;">
-            Visit Pre-Order Site &rarr;
+            Visit Order Site &rarr;
           </a>
         </div>
 
@@ -157,14 +160,14 @@ export async function PATCH(req: NextRequest) {
       console.log('--- RESEND EMAIL SENDING ATTEMPT (CANCELLED) ---');
       console.log('From address:', senderEmail);
       console.log('To address (customer):', order.email);
-      console.log('Subject:', `${subjectPrefix}Update on Your Pre-Order`);
+      console.log('Subject:', `${subjectPrefix}Update on Your Order`);
       console.log('------------------------------------------------');
 
       console.log('SENDING CUSTOMER CANCELLED EMAIL TO (exact value):', customer.email);
       const response = await resend.emails.send({
         from: senderEmail,
         to: customer.email,
-        subject: `${subjectPrefix}Update on Your Pre-Order`,
+        subject: `${subjectPrefix}Update on Your Order`,
         html: customerCancelledEmailHtml
       });
       if (response.error) {
