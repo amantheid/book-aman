@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "How many copies are available?",
-    a: "Only 47 copies in the first edition. Several are already reserved. Once sold out, the next batch may take time to arrive."
+    a: "Only 10 copies in the first edition. Several are already reserved. Once sold out, the next batch may take time to arrive."
   },
   {
     q: "Who is this book for?",
@@ -92,7 +92,7 @@ export default function Home() {
     };
   }, []);
 
-  const totalLimit = 47;
+  const totalLimit = 10;
   const remainingCopies = confirmedCount !== null ? Math.max(0, totalLimit - confirmedCount) : null;
   const isSoldOut = remainingCopies === 0;
 
@@ -111,7 +111,7 @@ export default function Home() {
           AMAN MUHAMMED
         </div>
         <div style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', color: '#000000', textTransform: 'uppercase' }}>
-          {remainingCopies !== null ? `FIRST EDITION · ${remainingCopies} COPIES LEFT` : "FIRST EDITION · 47 COPIES LEFT"}
+          {remainingCopies !== null ? `FIRST EDITION · ${remainingCopies} COPIES LEFT` : "FIRST EDITION · 10 COPIES LEFT"}
         </div>
       </header>
 
@@ -476,7 +476,7 @@ export default function Home() {
             Start Small. Stay Consistent. <br /> Build Impact.
           </h2>
           <p style={{ fontSize: '1rem', color: '#a0a07a', margin: '0 0 2.5rem 0', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            Only 47 copies available in the first batch.
+            Only 10 copies available in the first batch.
           </p>
           <button
             onClick={() => !isSoldOut && setShowOrder(true)}
