@@ -92,8 +92,8 @@ export default function Home() {
     };
   }, []);
 
-  const totalLimit = 10;
-  const remainingCopies = confirmedCount !== null ? Math.max(0, totalLimit - confirmedCount) : null;
+  const totalLimit = 20;
+  const remainingCopies = confirmedCount !== null ? Math.max(0, totalLimit - confirmedCount) : 10;
   const isSoldOut = remainingCopies === 0;
 
   return (
